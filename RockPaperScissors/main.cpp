@@ -16,7 +16,6 @@
 using namespace std;
 
 enum throw_type{rock, paper, scissors, last};
-enum throw_type currThrow, compThrow;
 string strInput, throwSelection, winMsg;
 double winRatio = 0;
 int numWins = 0, totalPlays = 0;
@@ -25,7 +24,8 @@ int main() {
    //infinite loop
    for(ever){
       //input throw
-      while(cout << "Input your throw -- Rock, Paper, or Scissors): " &&
+      enum throw_type currThrow, compThrow;
+      while(cout << "Input your throw -- Rock, Paper, or Scissors: " &&
             getline(cin, strInput)){
          istringstream iss {strInput};
          if ((iss >> throwSelection) && !(iss >> strInput)){
