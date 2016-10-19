@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <sstream>
 
@@ -15,65 +16,52 @@
 using namespace std;
 
 enum throw_type{rock, paper, scissors, last};
-string strInput, throw_type;
+enum throw_type currThrow, compThrow;
+string strInput, throwSelection, winMsg;
+double winRatio = 0;
+int numWins = 0, totalPlays = 0;
 //rock paper scissors
 int main() {
+   //infinite loop
    for(ever){
-      enum throw_type currentThrow, computerThrow;
-      while(cout << "Input your throw (rock, paper or scissors): " &&
+      //input throw
+      while(cout << "Input your throw -- Rock, Paper, or Scissors): " &&
             getline(cin, strInput)){
          istringstream iss {strInput};
-         if ((iss >> throw_type) && !(iss >> strInput)){
-            if (toupper(strInput[0] = 'R')){
-               currentThrow = rock;
+         if ((iss >> throwSelection) && !(iss >> strInput)){
+            if (toupper(throwSelection[0]) =='R'){
+               currThrow = rock;
                break;
-            } else if (toupper(strInput[0] = 'P')){
-               currentThrow = paper;
+            } else if (toupper(throwSelection[0]) == 'P'){
+               currThrow = paper;
                break;
-            } else if (toupper(strInput[0] = 'S')){
-               currentThrow = scissors;
+            } else if (toupper(throwSelection[0]) == 'S'){
+               currThrow = scissors;
                break;
             }
          }
          std::cerr << "Invalid input -- must be R , P or S" << endl;
       }
-      computerThrow = static_cast<enum throw_type>(rand() % last);
-      switch (currentThrow){
-         case rock:
-            if (computerThrow == rock){
-               cout << "Opponent thows rock -- you TIE" <<endl;
-            }
-            if (computerThrow == paper){
-               cout << "Opponent throws paper -- you LOSE" <<endl;
-            }
-            if (computerThrow == scissors){
-               cout << "Opponent throws scissors -- you WIN" <<endl;
-            }
-            break;
-         case paper:
-            if (computerThrow == rock){
-               cout << "Opponent thows rock -- you WIN" <<endl;
-            }
-            if (computerThrow == paper){
-               cout << "Opponent throws paper -- you TIE" <<endl;
-            }
-            if (computerThrow == scissors){
-               cout << "Opponent throws scissors -- you LOSE" <<endl;
-            }
-            break;
-         case scissors:
-            if (computerThrow == rock){
-               cout << "Opponent thows rock -- you LOSE" <<endl;
-            }
-            if (computerThrow == paper){
-               cout << "Opponent throws paper -- you WIN" <<endl;
-            }
-            if (computerThrow == scissors){
-               cout << "Opponent throws scissors -- you TIE" <<endl;
-            }
-            break;
-         default:
-            break;
+
+      //check for win conditions
+      compThrow = static_cast<enum throw_type>(rand() % last);
+      if (currThrow == compThrow){
+         winMsg = "TIE";
+         --totalPlays;
       }
+      else if ((currThrow==rock && compThrow==scissors) ||
+               (currThrow==paper && compThrow==rock) ||
+               (currThrow==scissors && compThrow==paper)){
+         winMsg = "WIN";
+         ++numWins;
+      }
+      else
+         winMsg = "LOSE";
+
+      //calculate win ratio
+      ++totalPlays;
+      winRatio = double(numWins) / totalPlays;
+      cout << "You " << right << setw(4) << winMsg << "! "
+           << "Win Ratio: " << fixed << setprecision(2) << winRatio << "%\n";
    }
 }
