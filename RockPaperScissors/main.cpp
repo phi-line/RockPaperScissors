@@ -1,9 +1,9 @@
 //
 //  main.cpp
-//  Classwork 10.18.16
+//  Rock Paper Scissors
 //
-//  Created by admin on 10/18/16.
-//  Copyright © 2016 admin. All rights reserved.
+//  Created by Kishan Emens on 10/18/16.
+//  Copyright © 2016 Kishan Emens. All rights reserved.
 //
 
 #include <iostream>
@@ -25,7 +25,7 @@ int main() {
    for(ever){
       //input throw
       enum throw_type currThrow, compThrow;
-      while(cout << "Input your throw -- Rock, Paper, or Scissors: " &&
+      while(cout << "Input your throw -- Rock, Paper, or Scissors): " &&
             getline(cin, strInput)){
          istringstream iss {strInput};
          if ((iss >> throwSelection) && !(iss >> strInput)){
@@ -60,7 +60,7 @@ int main() {
 
       //calculate win ratio
       ++totalPlays;
-      winRatio = double(numWins) / totalPlays;
+      winRatio = (double(numWins) / totalPlays)*100;
       cout << "You " << right << setw(4) << winMsg << "! "
            << "Win Ratio: " << fixed << setprecision(2) << winRatio << "%\n";
    }
